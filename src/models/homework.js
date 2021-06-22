@@ -2,19 +2,23 @@ const mongoose = require('mongoose');
 const { Types } = mongoose // const type = mongoose.Types
 
 const homeworkSchema = mongoose.Schema({
-    encargado: {
-        type: String,
-        required: true,
-        min: 3
+    usuario: {
+        ref: "user",
+        type: Types.ObjectId,
+        required: true
     },
     compromiso: {
         type: String,
         required: true,
         min: 3,
     },
+    fechaLimite: {
+        type: Date,
+        required: true
+    },
     fechaCumplimiento: {
         type: Date,
-        required: true,
+        required: false,
     },
     estado:[
         {

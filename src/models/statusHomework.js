@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const statusEnum = require('../utils/enums/homework.enum') 
 
 const statusHomeworkSchema = mongoose.Schema({
-    name: {
+    estado: {
         type: String,
         required: true,
         enum: statusEnum

@@ -33,9 +33,8 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
         minlength: 3,
-        select: false
     },
-    roles: [
+    rol: [
         {
         ref: "Role",
         type: Types.ObjectId
