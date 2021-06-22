@@ -1,23 +1,22 @@
-import route from "color-convert/route";
-import { Router } from "express";
-const router = Router();
+const router = require('express').Router();
 
-import * as userController from '../controllers/user.controller'
+const {getUser, getUsers, getUserById, updateUserById, deleteUserById} = require('../controllers/user.controller');
+//import * as userController from '../controllers/user.controller'
 
 // crear
-router.post('/', userController.getUser)
+router.post('/', getUser)
 
 // Listar todos los usuarios
-router.get('/', userController.getUsers)
+router.get('/', getUsers)
 
 // Buscar usuario por Id
-router.get('/:userId', userController.getUserById)
+router.get('/:userId', getUserById)
 
 // editar usuario
-router.put('/:userId', userController.updateUserById)
+router.put('/:userId', updateUserById)
 
 // Elminar usuario
-router.delete('/:userId', userController.deleteUserById)
+router.delete('/:userId', deleteUserById)
 
 
-export default router;
+module.exports = router;
