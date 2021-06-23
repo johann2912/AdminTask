@@ -19,7 +19,7 @@ const userSchema = mongoose.Schema({
         required: true
     },
     document_number: {
-        type: Number,
+        type: String,
         require: true,
         min: 3
     },
@@ -34,12 +34,12 @@ const userSchema = mongoose.Schema({
         required: true,
         minlength: 3,
     },
-    rol: [
+    rol:
         {
         ref: "Role",
         type: Types.ObjectId
         }
-    ]
+
 },{
     timestamps: true,
     versionkey: false

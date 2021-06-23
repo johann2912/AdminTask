@@ -5,7 +5,8 @@ const roleSchema = mongoose.Schema({
     rol: {
         type: String,
         required: true,
-        enum: userRol
+        enum: userRol,
+        unique: true
     },
 },{
     timestamps: true,
