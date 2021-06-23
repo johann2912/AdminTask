@@ -53,7 +53,7 @@ const getUsers = async (req, res) => {
     res.json(user)
 }
 
-// search product by id
+// search user by id
 const getUserById = async (req, res) => {
     const user = await User.findById(req.params.userId)
     if(user){
