@@ -20,6 +20,9 @@ app.get('/api', (req, res) => {
     // rol
     const roleRoute = require('./routes/role.routes');
 
+    // auth
+    const authRoute = require('./routes/auth.routes');
+    
 // Routes Middlewares
     // user
     app.use('/user', userRoute);
@@ -27,6 +30,8 @@ app.get('/api', (req, res) => {
     //rol
     app.use('/role', roleRoute);
     
+    // auth
+    app.use('/auth', authRoute);
 // Running server
 const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {

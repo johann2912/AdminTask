@@ -12,7 +12,7 @@ const postUser = async (req, res) => {
         document_number: Joi.string().min(3).max(30).required(),
         email: Joi.string().min(3).max(255).required().email(),
         password: Joi.string().min(3).max(1024).required(),
-        rol: Joi.string().required()
+        rol: Joi.string()
     })
 
     const { error } = schemaRegister.validate(req.body)
@@ -48,23 +48,40 @@ const postUser = async (req, res) => {
 }
 
 // list users 
-const getUsers = (req, res) => {
-    res.json('all users of the list')
+const getUsers = async (req, res) => {
+    const user = await User.find()
+    res.json(user)
 }
 
 // search product by id
-const getUserById = (req, res) => {
-
+const getUserById = async (req, res) => {
+    const user = await User.findById(req.params.userId)
+    if(user){
+        return res.json({
+            message: "Busqueda exitosa!",
+            user
+        })
+    } else {
+        return res.json({
+            message: "Buesqueda fallida",
+        })
+        
+    }
 }
 
 // edit user
-const updateUserById = (req, res) => {
+const updateUserById = async (req, res) => {
+    const userUpdate = await User.findByIdAndUpdate(req.params.userId, req.body, {
+        new: true
+    })
+    res.status(200).json({message: "Usuario modificado", userUpdate})
 
 }
 
 // Delete User
-const deleteUserById = (req, res) => {
-
+const deleteUserById = async (req, res) => {
+    const userDelete = await User.findByIdAndDelete(req.params.userId)
+    res.status(200).json({message: "Usuario eliminado con exito!", userDelete})
 }
 
 module.exports = {
