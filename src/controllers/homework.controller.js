@@ -50,7 +50,8 @@ const postHomework = async (req, res) => {
 
 // all list homework
 const getAllHomework = async (req, res) => {
-  const homework = await HomeworkModel.find();
+  let homework = await HomeworkModel.find();
+  homework = await AtrasadaStatus(homework)
   res.json(homework);
 };
 
@@ -135,8 +136,26 @@ const checkHomework = async (req, res) => {
     return res.json({
         ok: true
     })
-    
+
 };
+
+
+// function homework atrasada
+const AtrasadaStatus = async (atrasada) => {
+    let variables = [...atrasada]
+    variables.forEach((esperando,index) => {
+        const timely = dayjs().diff(dayjs(esperando.fechaLimite));
+        if(esperando.estado == "60d494d74725780fc49a2f81"){
+            if(timely > 0){
+                variables[index]["estadoAux"] = "atrasado"
+                console.log(variables[index])
+            }
+        }
+    });
+    return variables
+}
+
+
 
 module.exports = {
   postHomework,
