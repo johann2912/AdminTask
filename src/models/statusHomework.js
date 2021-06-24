@@ -5,7 +5,8 @@ const statusHomeworkSchema = mongoose.Schema({
     estado: {
         type: String,
         required: true,
-        enum: statusEnum
+        enum: statusEnum,
+        unique: true
     },
 }, {
     timestamps: true,

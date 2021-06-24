@@ -1,4 +1,4 @@
-const homeworkModel = require('../models/homework');
+const HomeworkModel = require('../models/homework');
 const statusHomework = require('../models/statusHomework');
 const Joi = require('@hapi/joi');
 
@@ -10,7 +10,6 @@ const postHomework = async (req, res) => {
         usuario: Joi.string().required(),
         compromiso: Joi.string().min(3).max(5000).required(),
         fechaLimite: Joi.date().required(),
-        fechaCumplimiento: Joi.date().required()
     })
 
     const { error } = schemaRegister.validate(req.body)
@@ -21,19 +20,12 @@ const postHomework = async (req, res) => {
         )
     }
 
-    const isHomeworkExist = await homeworkModel.findOne({ _id: req.params._id });
-    if (isHomeworkExist) {
-        return res.status(400).json(
-            {error: 'La tarea ya ha sido creada'}
-        )
-    }
-
     const { usuario, compromiso, fechaLimite, fechaCumplimiento, estado }= req.body
-    const estado = await statusHomework.findOne({
+    const estadoDB = await statusHomework.findOne({
         estado: 'pendiente'
     })
     
-    const homework = new homework({ usuario, compromiso, fechaLimite, fechaCumplimiento, estado: estado._id})
+    const homework = new HomeworkModel({ usuario, compromiso, fechaLimite, fechaCumplimiento, estado: estadoDB._id})
     console.log(homework)
 
     try {
@@ -47,3 +39,5 @@ const postHomework = async (req, res) => {
         res.status(400).json({error});
     }
 }
+
+module.exports =  postHomework; 

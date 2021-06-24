@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 // conexión dataBase
 const url = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster0.mgx44.mongodb.net/${process.env.DBNAME}`
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, (err) => console.error(err))
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, (err) => {if(err)console.error(err)})
 
 const db = mongoose.connection
 db.once('open', _ => {

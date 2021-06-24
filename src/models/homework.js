@@ -1,34 +1,35 @@
-const mongoose = require('mongoose');
-const { Types } = mongoose // const type = mongoose.Types
+const mongoose = require("mongoose");
+const { Types } = mongoose; // const type = mongoose.Types
 
-const homeworkSchema = mongoose.Schema({
+const HomeworkSchema = mongoose.Schema(
+  {
     usuario: {
-        ref: "user",
-        type: Types.ObjectId,
-        required: true
+      ref: "user",
+      type: Types.ObjectId,
+      required: true,
     },
     compromiso: {
-        type: String,
-        required: true,
-        min: 3,
+      type: String,
+      required: true,
+      min: 3,
     },
     fechaLimite: {
-        type: Date,
-        required: true
+      type: Date,
+      required: true,
     },
     fechaCumplimiento: {
-        type: Date,
-        required: false,
+      type: Date,
+      required: false,
     },
-    estado:[
-        {
-        ref: "statusHomework",
-        type: Types.ObjectId
-        }
-    ]
-},{
+    estado: {
+      ref: "statusHomework",
+      type: Types.ObjectId,
+    },
+  },
+  {
     timestamps: true,
-    versionkey: false
-})
+    versionkey: false,
+  }
+);
 
-module.exports = mongoose.model('homework', homeworkSchema);
+module.exports = mongoose.model("homework", HomeworkSchema);

@@ -22,6 +22,12 @@ app.get('/api', (req, res) => {
 
     // auth
     const authRoute = require('./routes/auth.routes');
+
+    // status homework
+    const statushomework = require('./routes/statusHomework.routes')
+
+    // Homeworks
+    const homework = require('./routes/homework.routes');
     
 // Routes Middlewares
     // user
@@ -32,6 +38,13 @@ app.get('/api', (req, res) => {
     
     // auth
     app.use('/auth', authRoute);
+
+    // status homework
+    app.use('/statusHomework', statushomework);
+
+    // homework
+    app.use('/homework', homework);
+
 // Running server
 const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {
