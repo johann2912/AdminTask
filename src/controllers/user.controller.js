@@ -63,7 +63,7 @@ const getUserById = async (req, res) => {
         })
     } else {
         return res.json({
-            message: "Buesqueda fallida",
+            message: "Buesqueda fallida"
         })
         
     }

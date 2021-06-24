@@ -3,7 +3,7 @@ const router = require('express').Router();
 const {postUser, getUsers, getUserById, updateUserById, deleteUserById} = require('../controllers/user.controller');
 
 // crear
-router.post('/', postUser)
+router.post('/create', postUser)
 
 // Listar todos los usuarios
 router.get('/', getUsers)
