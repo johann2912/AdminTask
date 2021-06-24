@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {postHomework, getAllHomework, getHomework, getStatusHomework, updateHomeworkById, deleteById} = require('../controllers/homework.controller');
+const {postHomework, getAllHomework, getHomework, getStatusHomework, updateHomeworkById, deleteById, checkHomework} = require('../controllers/homework.controller');
 
 
 // create homework
@@ -19,5 +19,8 @@ router.put('/:HomeworkId', updateHomeworkById);
 
 // delete homework
 router.delete('/:HomeworkId', deleteById);
+
+// check status "realizado"
+router.put('/state/:HomeworkId', checkHomework);
 
 module.exports = router;
