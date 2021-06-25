@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const {postHomework, getAllHomework, getHomework, getStatusHomework, updateHomeworkById, deleteById, checkHomework} = require('../controllers/homework.controller');
-
+const ensureToken = require('../middlewares/authorization');
+const { isGerencial } = require('../middlewares/validator');
 
 // create homework
-router.post('/create', postHomework);
+router.post('/create', [ensureToken, isGerencial], postHomework);
 
 // all list homework
 router.get('/', getAllHomework);

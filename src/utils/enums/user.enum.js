@@ -1,3 +1,3 @@
 const userRol = ['asistencial','administrativo','gerencial']
 
-module.exports = userRol
+module.exports =  userRol
