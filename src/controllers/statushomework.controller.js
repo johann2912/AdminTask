@@ -1,4 +1,4 @@
-const HomeworkModel = require('../models/statusHomework')
+const HomeworkModel = require('../models/homework')
 const StatusHomework = require('../utils/enums/homework.enum')
 
 const postHomework = async (req, res) => {

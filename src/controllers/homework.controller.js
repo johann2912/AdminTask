@@ -1,9 +1,6 @@
+const homeworkStatus = require('../utils/enums/homework.enum');
 const HomeworkModel = require("../models/homework");
-const statusHomework = require("../models/statusHomework");
 const Joi = require("@hapi/joi");
-
-const daysjs = require("dayjs");
-const { date } = require("@hapi/joi");
 const dayjs = require("dayjs");
 
 // create homework
@@ -21,18 +18,14 @@ const postHomework = async (req, res) => {
     return res.status(400).json({ error: error.details[0].message });
   }
 
-  const { usuario, compromiso, fechaLimite, fechaCumplimiento, estado } =
-    req.body;
-  const estadoDB = await statusHomework.findOne({
-    estado: "pendiente",
-  });
+  const { usuario, compromiso, fechaLimite, fechaCumplimiento, estado } = req.body;
 
   const homework = new HomeworkModel({
     usuario,
     compromiso,
     fechaLimite,
     fechaCumplimiento,
-    estado: estadoDB._id,
+    estado
   });
   //console.log(homework)
 
@@ -50,16 +43,19 @@ const postHomework = async (req, res) => {
 
 // all list homework
 const getAllHomework = async (req, res) => {
-  let homework = await HomeworkModel.find();
+  let homework = await HomeworkModel.find().populate('usuario');
   homework = await AtrasadaStatus(homework)
+  console.log(homework)
   res.json(homework);
 };
 
 // list homework for user id
 const getHomework = async (req, res) => {
-  const homeworkUser = await HomeworkModel.find({
+  let homeworkUser = await HomeworkModel.find({
     usuario: req.params.HomeworkId,
   });
+  homeworkUser = await AtrasadaStatus(homeworkUser)
+
   if (homeworkUser) {
     return res.json({
       message: "Busqueda realizada con exito",
@@ -93,23 +89,25 @@ const getStatusHomework = async (req, res) => {
 
 // edit homework
 const updateHomeworkById = async (req, res) => {
-  const homeworkUpdate = await HomeworkModel.findByIdAndUpdate(
+  let homeworkUpdate = await HomeworkModel.findByIdAndUpdate(
     req.params.HomeworkId,
     req.body,
     {
       new: true,
     }
   );
-  res
-    .status(200)
-    .json({ message: "Tarea modificada con exito!", homeworkUpdate });
+  homeworkUpdate = await AtrasadaStatus(homeworkUpdate)
+  res.status(200).json({ 
+    message: "Tarea modificada con exito!", homeworkUpdate 
+  });
 };
 
 // delete homework
 const deleteById = async (req, res) => {
-  const homeworkDelete = await HomeworkModel.findByIdAndDelete(
-    req.params.HomeworkId
+  let homeworkDelete = await HomeworkModel.findByIdAndDelete(
+    req.params.HomeworkId  
   );
+  homeworkDelete = await AtrasadaStatus(homeworkDelete)
   res.status(200).json({ message: "Tarea elimina con exito!", homeworkDelete });
 };
 
@@ -119,42 +117,33 @@ const checkHomework = async (req, res) => {
   const timely = dayjs().diff(dayjs(homework.fechaLimite));
 
   if(timely <= 0) {
-    const realizada = await statusHomework.findOne({
-        estado: 'realizado'
-    })
-        console.dir('on time')
-      homework.estado = realizada._id
+     homework.estado = homeworkStatus.realizado
   } else {
-      const tarde = await statusHomework.findOne({
-          estado: 'realizado tarde'
-      })
-      console.dir('not on time')
-      homework.estado = tarde._id
+     homework.estado = homeworkStatus['realiazado tarde']
   }
 
     await homework.save()
     return res.json({
-        ok: true
+        ok: true,
+        homework: homework.estado
     })
 
 };
-
 
 // function homework atrasada
 const AtrasadaStatus = async (atrasada) => {
     let variables = [...atrasada]
     variables.forEach((esperando,index) => {
         const timely = dayjs().diff(dayjs(esperando.fechaLimite));
-        if(esperando.estado == "60d494d74725780fc49a2f81"){
+        if(esperando.estado == homeworkStatus.pendiente){
             if(timely > 0){
-                variables[index]["estadoAux"] = "atrasado"
-                console.log(variables[index])
+                variables[index].estado = homeworkStatus.atrasado
             }
         }
     });
-    return variables
-}
 
+    return variables
+};
 
 
 module.exports = {
@@ -164,5 +153,5 @@ module.exports = {
   getStatusHomework,
   updateHomeworkById,
   deleteById,
-  checkHomework,
+  checkHomework
 };

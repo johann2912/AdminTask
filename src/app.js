@@ -24,7 +24,7 @@ app.get('/api', (req, res) => {
     const authRoute = require('./routes/auth.routes');
 
     // status homework
-    const statushomework = require('./routes/statusHomework.routes')
+    //const statushomework = require('./routes/statusHomework.routes')
 
     // Homeworks
     const homework = require('./routes/homework.routes');
@@ -40,7 +40,7 @@ app.get('/api', (req, res) => {
     app.use('/auth', authRoute);
 
     // status homework
-    app.use('/statusHomework', statushomework);
+    //app.use('/statusHomework', statushomework);
 
     // homework
     app.use('/homework', homework);

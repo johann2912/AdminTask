@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { Types } = mongoose; // const type = mongoose.Types
+const homeworkStatus = require('../utils/enums/homework.enum')
 
 const HomeworkSchema = mongoose.Schema(
   {
@@ -22,8 +23,8 @@ const HomeworkSchema = mongoose.Schema(
       required: false,
     },
     estado: {
-      ref: "statusHomework",
-      type: Types.ObjectId,
+      type: String,
+      default: homeworkStatus.pendiente
     },
   },
   {
