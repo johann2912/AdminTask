@@ -49,13 +49,13 @@ const postUser = async (req, res) => {
 
 // list users 
 const getUsers = async (req, res) => {
-    const user = await User.find()
+    const user = await User.find().populate('rol')
     res.json(user)
 }
 
 // search user by id
 const getUserById = async (req, res) => {
-    const user = await User.findById(req.params.userId)
+    const user = await User.findById(req.params.userId).populate('rol')
     if(user){
         return res.json({
             message: "Busqueda exitosa!",
@@ -73,14 +73,14 @@ const getUserById = async (req, res) => {
 const updateUserById = async (req, res) => {
     const userUpdate = await User.findByIdAndUpdate(req.params.userId, req.body, {
         new: true
-    })
+    }).populate('rol')
     res.status(200).json({message: "Usuario modificado", userUpdate})
 
 }
 
 // Delete User
 const deleteUserById = async (req, res) => {
-    const userDelete = await User.findByIdAndDelete(req.params.userId)
+    const userDelete = await User.findByIdAndDelete(req.params.userId).populate('rol')
     res.status(200).json({message: "Usuario eliminado con exito!", userDelete})
 }
 

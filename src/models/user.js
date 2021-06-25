@@ -34,6 +34,7 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
       minlength: 3,
+      select:false
     },
     rol: {
       ref: "Role",

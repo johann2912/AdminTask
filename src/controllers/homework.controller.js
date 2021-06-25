@@ -53,7 +53,7 @@ const getAllHomework = async (req, res) => {
 const getHomework = async (req, res) => {
   let homeworkUser = await HomeworkModel.find({
     usuario: req.params.HomeworkId,
-  });
+  }).populate('usuario');
   homeworkUser = await AtrasadaStatus(homeworkUser)
 
   if (homeworkUser) {

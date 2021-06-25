@@ -5,15 +5,15 @@ require("dotenv").config();
 
 //  login
 const signUp = async (req, res) => {
-  let user = await User.findOne({ email: req.body.email });
+  let user = await User.findOne({ email: req.body.email }).select('_id, password');
   if (user) {
     let pass = user.comparePassword(req.body.password);
     if (!pass)
       return res.status(403).json({
-        message: "Wrong Credentials",
+        message: "problema con las credenciales",
       });
 
-    req.body.validateToken = jwt.sign({ user }, process.env.TOKEN_SECRET);
+    req.body.validateToken = jwt.sign({ id: user._id }, process.env.TOKEN_SECRET);
 
     // consultar si existe token
     token = await validateToken.findOne({ id: user._id });
@@ -38,22 +38,22 @@ const signUp = async (req, res) => {
 };
 
 // logout
-const signIn =  async (req, res) => {  
+const  logout =  async (req, res) => {  
     
     if(req.message == 0){
         res.status(400).send('Token invalido')
     } else {
         const buscando = await validateToken.findOne({id: req.params.id})
         //console.log(buscando)
-        if(!buscando) return res.status(400).json({ error: 'Token no encontrado'})
+        if(!buscando) return res.status(400).json({ error: 'ocurrio un error'})
         let lalala = await validateToken.deleteOne({ _id: buscando._id })
         //console.log(lalala)
-        res.status(200).send('Token eliminado con exito')
+        res.status(200).send('session cerrada')
     }
 
 };
 
 module.exports = {
   signUp,
-  signIn,
+  logout
 };
