@@ -16,4 +16,12 @@ const postRole = async (req, res) => {
 
 }
 
-module.exports =  postRole 
+const getRoles = async (req, res) => {
+    const roles = await RoleModel.find()
+    res.json(roles)
+}
+
+module.exports = {
+    postRole,
+    getRoles   
+}

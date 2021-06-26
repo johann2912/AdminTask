@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const {postHomework, getAllHomework, getHomework, getStatusHomework, updateHomeworkById, deleteById, checkHomework} = require('../controllers/homework.controller');
+
 const ensureToken = require('../middlewares/authorization');
 const { isGerencial } = require('../middlewares/validator');
 
@@ -7,21 +8,22 @@ const { isGerencial } = require('../middlewares/validator');
 router.post('/create', [ensureToken, isGerencial], postHomework);
 
 // all list homework
-router.get('/', getAllHomework);
+router.get('/', ensureToken, getAllHomework);
 
 // list homework for user id
-router.get('/:HomeworkId', getHomework);
+router.get('/:HomeworkId', ensureToken, getHomework);
 
 // search homework for userid and status homework
 router.get('/:HomeworkId/:StatusId', getStatusHomework);
 
 // edit homework
-router.put('/:HomeworkId', updateHomeworkById);
+router.put('/:HomeworkId', [ensureToken, isGerencial], updateHomeworkById);
 
 // delete homework
-router.delete('/:HomeworkId', deleteById);
+router.delete('/:HomeworkId', [ensureToken, isGerencial], deleteById);
 
-// check status "realizado"
-router.put('/state/:HomeworkId', checkHomework);
+// check status homework
+router.put('/state/:HomeworkId', ensureToken, checkHomework);
+
 
 module.exports = router;

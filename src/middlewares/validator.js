@@ -1,6 +1,5 @@
 const User = require("../models/user");
 const ModelRol = require('../models/roles');
-const { RolUser, userRol } = require('../utils/enums/user.enum')
 
 
 const isGerencial = async (req, res, next) => {
@@ -16,7 +15,6 @@ const isGerencial = async (req, res, next) => {
     }
 
 }
-
 
 const isAdminsitrativo = async (req, res, next) => {
     const user = await User.findById(req.id)

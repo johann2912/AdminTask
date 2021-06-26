@@ -28,6 +28,9 @@ app.get('/api', (req, res) => {
 
     // Homeworks
     const homework = require('./routes/homework.routes');
+
+    // report Gerencial
+    const report = require('./routes/reportGerencial.routes')
     
 // Routes Middlewares
     // user
@@ -44,6 +47,9 @@ app.get('/api', (req, res) => {
 
     // homework
     app.use('/homework', homework);
+
+    // report Gerencial
+    app.use('/report', report)
 
 // Running server
 const PORT = process.env.PORT || 3002;
