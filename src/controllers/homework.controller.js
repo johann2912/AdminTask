@@ -36,7 +36,7 @@ const postHomework = async (req, res) => {
       data: savedHomework,
     });
   } catch (error) {
-    console.dir(error);
+    //console.dir(error);
     res.status(400).json({ error });
   }
 };
@@ -45,7 +45,7 @@ const postHomework = async (req, res) => {
 const getAllHomework = async (req, res) => {
   let homework = await HomeworkModel.find().populate('usuario');
   homework = await AtrasadaStatus(homework)
-  console.log(homework)
+  //console.log(homework)
   res.json(homework);
 };
 

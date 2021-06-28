@@ -41,7 +41,7 @@ const postUser = async (req, res) => {
             data: savedUser
         });
     } catch (error) {
-        console.dir(error)
+        //console.dir(error)
         res.status(400).json({error});
     }
     
