@@ -9,7 +9,8 @@ const reportGerencial = async (req, res) => {
     let dateFinish = dayjs(req.body.end).toDate()
 
     let monthHomeworks = await HomeworkModel.find().where('createdAt').gte(dateInit).lte(dateFinish)
-    
+    //res.json(monthHomeworks)
+
     let pendiente = 0
     let atrasado = 0
     let realizado = 0
@@ -41,24 +42,29 @@ const reportGerencial = async (req, res) => {
     
     // porcentaajes totales
     
-    let pendientess = Math.round((pendiente / totalTasks) * 100)
-    let atrasadass = Math.round((atrasado / totalTasks) * 100)
-    let realizadoss = Math.round((realizado / totalTasks) * 100)
-    let realizadoTardee = Math.round((realizado_tarde / totalTasks) * 100)
+    let PorcentPendientes = Math.round((pendiente / totalTasks) * 100)
+    let PorcentAtrasadas = Math.round((atrasado / totalTasks) * 100)
+    let PorcentRealizados = Math.round((realizado / totalTasks) * 100)
+    let PorcentTarde = Math.round((realizado_tarde / totalTasks) * 100)
     
 
-    console.log(`Compromisos pendientes: ${pendiente}, esto es igual al ${pendientess}%`)
-    console.log(`Compromisos atrasados: ${atrasado}, esto es igual al ${atrasadass}%`)
-    console.log(`Compromisos realizados: ${realizado}, esto es igual al ${realizadoss}%`)
-    console.log(`Compromisos realizados tardes: ${realizado_tarde}, esto es igual al ${realizadoTardee}%`)
+    console.log(`Compromisos pendientes: ${pendiente}, esto es igual al ${PorcentPendientes}%`)
+    console.log(`Compromisos atrasados: ${atrasado}, esto es igual al ${PorcentAtrasadas}%`)
+    console.log(`Compromisos realizados: ${realizado}, esto es igual al ${PorcentRealizados}%`)
+    console.log(`Compromisos realizados tardes: ${realizado_tarde}, esto es igual al ${PorcentTarde}%`)
 
-    let porcentaje = Math.round(pendientess+atrasadass+realizadoss+realizadoTardee)
-    console.log(`Todo esto equivale al ${porcentaje}% de las tareas totales que se encuentran entre ${dateInit} y ${dateFinish}`)
-
-
-    //console.log(statusTask)
-    res.json(monthHomeworks)
+    let porcentaje = Math.round(PorcentPendientes + PorcentAtrasadas + PorcentRealizados + PorcentTarde)
+    console.log(`Todo esto equivale al ${porcentaje}% fecha inicio: ${dateInit} y fecha final: ${dateFinish}`)
     
+    return res.json({
+        PorcentPendientes,
+        PorcentAtrasadas,
+        PorcentRealizados,
+        PorcentTarde
+    })
+  
 }
+
+
 
 module.exports = reportGerencial
