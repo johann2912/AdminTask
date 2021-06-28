@@ -36,29 +36,24 @@ const reportGerencial = async (req, res) => {
         //console.log(`${index} => ${statusTask.estado}`)
     });
 
-    let totalTasks = pendiente+atrasado+realizado+realizado_tarde
+    let totalTasks = pendiente + atrasado + realizado + realizado_tarde
     console.log(`El número total de tareas son: ${totalTasks}`)
-
-    console.log(
-        `Compromisos pendientes: ${pendiente}`,
-        `Compromisos atrasados: ${atrasado}`,
-        `Compromisos realizados: ${realizado}`,
-        `Compromisos realizados tardes: ${realizado_tarde}`
-    )
     
     // porcentaajes totales
-    let pendientess = (totalTasks / 0.10) / pendiente
-    let atrasadass = (totalTasks / 0.10) / atrasado
-    let realizadoss = (totalTasks / 0.10) / realizado
-    let realizadoTardee = (totalTasks / 0.10) / realizado_tarde
-
-    console.log(pendientess, "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    console.log(atrasadass, "##############################")
-    console.log(realizadoss, "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    console.log(realizadoTardee, "#########################")
     
-    let porcentaje = (pendientess+atrasadass+realizadoss+realizadoTardee) / 0.10
-    console.log(porcentaje)
+    let pendientess = Math.round((pendiente / totalTasks) * 100)
+    let atrasadass = Math.round((atrasado / totalTasks) * 100)
+    let realizadoss = Math.round((realizado / totalTasks) * 100)
+    let realizadoTardee = Math.round((realizado_tarde / totalTasks) * 100)
+    
+
+    console.log(`Compromisos pendientes: ${pendiente}, esto es igual al ${pendientess}%`)
+    console.log(`Compromisos atrasados: ${atrasado}, esto es igual al ${atrasadass}%`)
+    console.log(`Compromisos realizados: ${realizado}, esto es igual al ${realizadoss}%`)
+    console.log(`Compromisos realizados tardes: ${realizado_tarde}, esto es igual al ${realizadoTardee}%`)
+
+    let porcentaje = Math.round(pendientess+atrasadass+realizadoss+realizadoTardee)
+    console.log(`Todo esto equivale al ${porcentaje}% de las tareas totales que se encuentran entre ${dateInit} y ${dateFinish}`)
 
 
     //console.log(statusTask)
