@@ -8,7 +8,7 @@ const ensureToken = async (req, res, next) => {
   
     const authorization = req.headers["authorization"];
     //console.log(authorization);
-    if (!authorization) res.json({ message: "ocurrio un error, porfavor intente más tarde"});
+    if (!authorization) res.json({ message: "Inicia session, intenta más tarde"});
     const bearer = authorization.split(" ");
     const bearerToken = bearer[1];
     req.token = bearerToken;

@@ -6,7 +6,7 @@ const isGerencial = async (req, res, next) => {
     const user = await User.findById(req.id)
     const rol = await ModelRol.findOne({_id: user.rol})
 
-    console.log(rol.rol)
+    if(!rol) return res.json({message: "No tienes permisos para realizar esta acción"})
     
     if(rol.rol == 'gerencial'){
         next();

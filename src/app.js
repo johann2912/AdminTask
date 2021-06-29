@@ -1,10 +1,6 @@
 const express = require('express');
 require('dotenv').config()
 require('./dataBase')
-const PDF = require('pdfkit');
-const fs = require('fs');
-const reportGerencial = require('./controllers/reportGerencial.controller');
-
     
 // Capture Body
 const app = express();
@@ -35,7 +31,7 @@ app.get('/api', (req, res) => {
 
     // report Gerencial
     const report = require('./routes/reportGerencial.routes');
-const { stringify } = require('querystring');
+
     
 // Routes Middlewares
     // user
@@ -55,21 +51,6 @@ const { stringify } = require('querystring');
 
     // report Gerencial
     app.use('/report', report)
-
-
-// Generar Pdf
-let doc = new PDF();
-doc.pipe(fs.createWriteStream(__dirname + '/reporte.pdf'));
-doc.text('Reporte generencial sobre la tasa de cumplimiento en actividades asignadas',{
-    align: 'center'
-});
-
-const Task = reportGerencial
-
-doc.text(Task);
-
-doc.end();
-console.log('documento generado')
 
 
 // Running server

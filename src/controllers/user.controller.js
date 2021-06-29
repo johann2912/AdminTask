@@ -71,6 +71,7 @@ const getUserById = async (req, res) => {
 
 // edit user
 const updateUserById = async (req, res) => {
+    
     const userUpdate = await User.findByIdAndUpdate(req.params.userId, req.body, {
         new: true
     }).populate('rol')
